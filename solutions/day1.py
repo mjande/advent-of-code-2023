@@ -1,18 +1,29 @@
-def main():
-    sum = 0
-    
-    with open("day1part1.txt") as file:
-        for line in file:
-            left = get_left_digit(line)
-            right = get_right_digit(line)
-            cal_value = int(left + right)
+num_dict = {
+    'one': '1',
+    'two': '2',
+    "three": '3',
+    'four': '4',
+    'five': '5',
+    'six': '6',
+    'seven': '7',
+    'eight': '8',
+    'nine': '9'    
+}
 
-            sum += cal_value
+# Part 1
+def get_left_digit_p1(string):
+    for i in range(len(string)):
+        char = string[i]
+        if char.isnumeric():
+            return char
+        
+def get_right_digit_p1(string):
+    for i in range(len(string) - 1, -1, -1):
+        char = string[i]
+        if char.isnumeric():
+            return char
 
-    return sum
-
-
-def get_left_digit(string):
+def get_left_digit_p2(string):
     for i in range(len(string)):
         char = string[i]
         if char.isnumeric():
@@ -24,7 +35,7 @@ def get_left_digit(string):
                 return spelled_out
 
         
-def get_right_digit(string):
+def get_right_digit_p2(string):
     for i in range(len(string) - 1, -1, -1):
         char = string[i]
         if char.isnumeric():
@@ -41,23 +52,34 @@ def check_for_spelled_out(string, start_index):
     four_char = string[start_index:start_index+4]
     five_char = string[start_index:start_index+5]
     
-    if three_char == 'one':
-        return '1'
-    if three_char == 'two':
-        return '2'
-    if five_char == 'three':
-        return '3'
-    if four_char == 'four':
-        return '4'
-    if four_char == 'five':
-        return '5'
-    if three_char == 'six':
-        return '6'
-    if five_char == 'seven':
-        return '7'
-    if five_char == 'eight':
-        return '8'
-    if four_char == 'nine':
-        return '9'
+    if three_char in num_dict:
+        return num_dict[three_char]
+    if four_char in num_dict:
+        return num_dict[four_char]
+    if five_char in num_dict:
+        return num_dict[five_char]
     
-print(main())
+if __name__ == '__main__':
+    # Part 1
+    with open("../inputs/day1.txt") as input:
+        sum = 0
+        for line in input:            
+            left = get_left_digit_p1(line)
+            right = get_right_digit_p1(line)
+            cal_value = int(left + right)
+
+            sum += cal_value
+
+        print("Part 1: ", sum)
+        
+    # Part 2
+    with open("../inputs/day1.txt") as input:
+        sum = 0
+        for line in input:            
+            left = get_left_digit_p2(line)
+            right = get_right_digit_p2(line)
+            cal_value = int(left + right)
+
+            sum += cal_value
+
+        print("Part 2: ", sum)
